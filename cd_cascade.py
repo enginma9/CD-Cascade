@@ -37,11 +37,10 @@ def save_sectors_as_track( cd, track_num, output_directory, this_track_string, o
         max_size = pycdio.ISO_BLOCKSIZE * max_blocks
         read_mode = pycdio.READ_MODE_AUDIO
         desired_blocks = 55
-
-        lsn_start += desired_blocks
         total_blocks = desired_blocks
 
         audio = get_segment( cd, lsn_start, desired_blocks )
+        lsn_start += desired_blocks
         
         while lsn_start < lsn_end :
             if( lsn_start + 55 <= lsn_end):
@@ -63,7 +62,8 @@ def save_sectors_as_track( cd, track_num, output_directory, this_track_string, o
                         pass
             audio = audio + new_audio
             lsn_start += desired_blocks
-            total_blocks += desired_blocks
+            total_blocks += desired_blocks                          # print if you want to see #blocks
+                                                                    # removed because of aesthetics
         exp_as( audio, output_format, this_track_string, output_directory )
         
 def set_up():
